@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Helhum\SentryTypo3\Integration;
 
-use Jean85\PrettyVersions;
-use PackageVersions\Versions;
 use Sentry\Event;
 use TYPO3\CMS\Core\Core\Environment;
 
@@ -22,7 +20,7 @@ class Typo3Context implements ContextInterface
             'typo3_version' => TYPO3_version,
             'typo3_mode' => TYPO3_MODE,
             'application_context' => (string)Environment::getContext(),
-            'application_version' => PrettyVersions::getVersion(Versions::ROOT_PACKAGE_NAME)->getPrettyVersion(),
+            'application_version' => \Composer\InstalledVersions::getPrettyVersion(\Composer\InstalledVersions::getRootPackage()['name']),
         ]));
     }
 }

@@ -6,8 +6,6 @@ namespace Helhum\SentryTypo3;
 
 use Helhum\SentryTypo3\Integration\BeforeEventListener;
 use Http\Discovery\Psr17FactoryDiscovery;
-use Jean85\PrettyVersions;
-use PackageVersions\Versions;
 use Sentry\ClientBuilder;
 use Sentry\HttpClient\HttpClientFactory;
 use Sentry\Integration\FatalErrorListenerIntegration;
@@ -43,7 +41,7 @@ final class Sentry
                 getenv('TYPO3_PATH_APP'),
             ],
             'environment' => $GLOBALS['TYPO3_CONF_VARS']['SYS']['environment'] ?? 'production',
-            'release' => PrettyVersions::getVersion(Versions::ROOT_PACKAGE_NAME)->getShortCommitHash(),
+            'release' => \Composer\InstalledVersions::getVersion(\Composer\InstalledVersions::getRootPackage()['name']),
             'default_integrations' => false,
             'integrations' => [
                 new FatalErrorListenerIntegration(),
@@ -76,7 +74,7 @@ final class Sentry
                 $streamFactory,
                 null,
                 'sentry.php.typo3',
-                PrettyVersions::getVersion('sentry/sentry')->getPrettyVersion()
+                \Composer\InstalledVersions::getPrettyVersion('sentry/sentry')
             )
         ));
         SentrySdk::getCurrentHub()->bindClient($clientBuilder->getClient());

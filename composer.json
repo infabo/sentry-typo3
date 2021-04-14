@@ -23,7 +23,8 @@
   },
   "require-dev": {
     "roave/security-advisories": "dev-master",
-    "symplify/easy-coding-standard": "^9"
+    "symplify/easy-coding-standard": "^9",
+    "composer-runtime-api": "^2"
   },
   "autoload": {
     "psr-4": {
