@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 namespace Helhum\SentryTypo3\Log\Writer;
 
 use Helhum\SentryTypo3\Sentry;
@@ -23,11 +24,15 @@ class SentryBreadcrumbWriter extends AbstractWriter
 
     public function writeLog(LogRecord $record): WriterInterface
     {
+        $message = $record->getMessage();
+        if (method_exists($this, 'interpolate')) {
+            $message = $this->interpolate($message, $record->getData());
+        }
         \Sentry\addBreadcrumb(
             Breadcrumb::fromArray(
                 [
                     'level' => $this->getSeverityFromLevel(LogLevel::normalizeLevel($record->getLevel())),
-                    'message' => $record->getMessage(),
+                    'message' => $message,
                     'data' => $record->getData(),
                     'category' => $record->getComponent(),
                 ]

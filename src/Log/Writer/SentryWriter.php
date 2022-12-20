@@ -80,7 +80,11 @@ class SentryWriter extends AbstractWriter
             try {
                 $event = Event::createEvent();
                 $event->setLevel($this->getSeverityFromLevel(LogLevel::normalizeLevel($record->getLevel())));
-                $event->setMessage($record->getMessage());
+                $message = $record->getMessage();
+                if (method_exists($this, 'interpolate')) {
+                    $message = $this->interpolate($message, $record->getData());
+                }
+                $event->setMessage($message);
                 $hub->captureEvent($event, null, $scope);
             } catch (\Throwable $e) {
                 // Avoid hard failure in case connection to sentry failed
