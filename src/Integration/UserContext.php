@@ -8,6 +8,8 @@ use Sentry\UserDataBag;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\UserAspect;
 use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Http\ApplicationType;
+use TYPO3\CMS\Core\Http\ServerRequestFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class UserContext implements ContextInterface
@@ -22,7 +24,9 @@ class UserContext implements ContextInterface
         $user = [
             'ip_address' => GeneralUtility::getIndpEnv('REMOTE_ADDR'),
         ];
-        $userType = TYPO3_MODE === 'FE' ? 'frontend' : 'backend';
+        $applicationType = ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'] ?? ServerRequestFactory::fromGlobals());
+        $userType = $applicationType->isFrontend() ? 'frontend' : 'backend';
+
         /** @var UserAspect $userAspect */
         $userAspect = GeneralUtility::makeInstance(Context::class)->getAspect($userType . '.user');
         if ($userAspect->isLoggedIn()) {
