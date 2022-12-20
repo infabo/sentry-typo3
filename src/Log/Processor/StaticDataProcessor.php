@@ -43,7 +43,7 @@ class StaticDataProcessor extends AbstractProcessor
      * @param LogRecord $logRecord The log record to process
      * @return LogRecord The processed log record with additional data
      */
-    public function processLogRecord(LogRecord $logRecord)
+    public function processLogRecord(LogRecord $logRecord): LogRecord
     {
         $logRecord->addData($this->data);
 

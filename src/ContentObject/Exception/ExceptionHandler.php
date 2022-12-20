@@ -8,7 +8,7 @@ use TYPO3\CMS\Frontend\ContentObject\Exception\ProductionExceptionHandler;
 
 class ExceptionHandler extends ProductionExceptionHandler
 {
-    protected function logException(\Exception $exception, $errorMessage, $code)
+    protected function logException(\Exception $exception, $errorMessage, $code): void
     {
         if (Environment::getContext()->isDevelopment()) {
             throw $exception;

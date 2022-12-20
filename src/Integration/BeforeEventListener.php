@@ -19,7 +19,7 @@ class BeforeEventListener
 
         if (isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sentry']['typo3_integrations'])) {
             $integrations = array_map(
-                function ($className) {
+                static function ($className) {
                     return new $className();
                 },
                 $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sentry']['typo3_integrations']
