@@ -19,8 +19,7 @@ final class Sentry
 
     public static function captureEvent(LogRecord $record): ?EventId
     {
-        $initialized = self::initialize();
-        if (!$initialized) {
+        if (!self::initialize()) {
             return null;
         }
         $message = self::$messageFactory?->createFromLogRecord($record);
@@ -35,8 +34,7 @@ final class Sentry
 
     public static function addBreadcrumb(LogRecord $record): bool
     {
-        $initialized = self::initialize();
-        if (!$initialized) {
+        if (!self::initialize()) {
             return false;
         }
         $breadcrumb = self::$messageFactory?->createBreadCrumbFromLogRecord($record);

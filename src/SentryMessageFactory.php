@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Helhum\SentryTypo3;
 
+use Psr\Log\LogLevel;
 use Sentry\Breadcrumb;
 use Sentry\Event;
 use Sentry\EventHint;
 use Sentry\ExceptionMechanism;
 use Sentry\Severity;
-use TYPO3\CMS\Core\Log\LogLevel;
 use TYPO3\CMS\Core\Log\LogRecord;
 
 final class SentryMessageFactory
